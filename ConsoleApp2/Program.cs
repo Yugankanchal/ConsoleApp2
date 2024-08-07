@@ -8,11 +8,15 @@ namespace ConsoleApp2
     {
         static void Main(string[] args)
         {
-            List<PhysicalProductModel> cart = AddSampleData();
+            List<IProductModel> cart = AddSampleData();
             CustomerModel customer = getCustomer();
             foreach (var product in cart) 
             {
                 product.shipItem(customer);
+                if (product is IDigitalProductModel digital)
+                {
+                    Console.WriteLine($"Total Numbers of downloads Left are {digital.TotalDownloadsLeft}");
+                }
             }
 
         }
@@ -30,12 +34,15 @@ namespace ConsoleApp2
             };
         }
 
-        private static List<PhysicalProductModel> AddSampleData()
+        private static List<IProductModel> AddSampleData()
         {
-            List<PhysicalProductModel> output = new List<PhysicalProductModel>();
+            List<IProductModel> output = new List<IProductModel>();
             output.Add(new PhysicalProductModel { Title = "Nerf Blaster" });
             output.Add(new PhysicalProductModel { Title = "Hard Drive" });
             output.Add(new PhysicalProductModel { Title = "Jordan Shoes" });
+            output.Add(new DigitalProduct { Title= "Digital Service Product"});
+            output.Add(new DigitalProduct { Title = "Digital Service Product" });
+            output.Add(new CourseProductModel { Title = "Dotnet FullStack Course" });
             return output;
         }
     }
